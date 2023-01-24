@@ -33,7 +33,6 @@ const MongoStore = require('connect-mongo');
 //const helmet = require('helmet');
 
 const dbUrlLocal = 'mongodb://127.0.0.1:27017/yelpCamp';
-//const dbUrlLocal = 'mongodb://0.0.0.0:27017/yelpCamp'
 const dbUrl = process.env.DB_URL || dbUrlLocal;
 //const dotenv = require('dotenv');
 
