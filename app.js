@@ -12,7 +12,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const path = require('path');
-const PORT = process.env.PORT || 7238; //7238c is default for Railway app
+const PORT = process.env.PORT || 8080;
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash');
@@ -32,7 +32,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 //const helmet = require('helmet');
 
-const dbUrlLocal = 'mongodb://127.0.0.1:27017/yelpCamp'
+const dbUrlLocal = 'mongodb://mongo:27017/yelpCamp';
 const dbUrl = process.env.DB_URL || dbUrlLocal;
 //const dotenv = require('dotenv');
 
