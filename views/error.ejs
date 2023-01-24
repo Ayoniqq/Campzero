@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate')%>
+
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">
+            <%= err.message %>
+        </h4>
+        <p>SORRY!! The Page you are trying to access was not found</p>
+        <hr>
+        <p class="mb-0">
+            <% if (process.env.NODE_ENV !=='production' ) {%>
+                <%= err.stack%>
+                    <% } %>
+        </p>
+    </div>
