@@ -12,7 +12,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const path = require('path');
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 7238; //7238c is default for Railway app
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash');
@@ -32,8 +32,22 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 //const helmet = require('helmet');
 
-const dbUrlLocal = 'mongodb://mongo:27017/yelpCamp';
+const dbUrlLocal = 'mongodb://127.0.0.1:27017/yelpCamp'
 const dbUrl = process.env.DB_URL || dbUrlLocal;
+
+const bodyParser = require('body-parser');
+
+
+// Put these statements before you define any routes.
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
+
+
+const multer = require('multer');
+const upload = multer();
+
+app.use(multer().array()); //THIS HELPED TO ACCESS req.body files in my edit campground submission
 //const dotenv = require('dotenv');
 
 //const isLoggedIn = require('middleware');
@@ -50,7 +64,7 @@ const { getMaxListeners } = require('process');
 const { Store } = require('express-session');
 mongoose.set('strictQuery', true); //Ensure this code comes before Mongoose connection below
 
-//mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp') //, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp') //, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connect(dbUrlLocal)
     .then(() => {
         console.log("MONGO DB CONNECTION OPEN");
@@ -64,6 +78,7 @@ mongoose.connect(dbUrlLocal)
 app.engine('ejs', ejsMate); //FOR EJS-MATE
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('public'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));

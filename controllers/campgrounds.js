@@ -68,7 +68,7 @@ module.exports.showCampgrounds = async (req, res, next) => {
 
 module.exports.renderEditForm = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const { id } = req.params;
         const campground = await Campground.findById(id);
         res.render(`campgrounds/edit`, { campground });
     }
@@ -80,18 +80,18 @@ module.exports.renderEditForm = async (req, res, next) => {
 module.exports.updateCampground = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(req.body);
+        console.log(id, req.body);
         const campground = await Campground.findByIdAndUpdate(id, { ...req.body }); //LINE 72 & 73 is what is giving me eror in my edit code
-        const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
-        campground.images.push(...imgs);
+        //const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        //campground.images.push(...imgs);
         await campground.save();
-        if (req.body.deleteImages) {
-            for (let filename of req.body.deleteImages) {
-                await cloudinary.uploader.destroy(filename);
-            }
-            await campground.update({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
-            console.log(campground);
-        }
+        // if (req.body.deleteImages) {
+        //     for (let filename of req.body.deleteImages) {
+        //         await cloudinary.uploader.destroy(filename);
+        //     }
+        //     await campground.update({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
+        //     console.log(campground);
+        // }
         req.flash('success', 'You have successfully Updated the Campground');
         res.redirect(`/campgrounds/${campground._id}`)
     }
