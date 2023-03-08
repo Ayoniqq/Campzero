@@ -1,3 +1,7 @@
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 8080;
+
 /* ---------------<--MONGO DB CONNECTION -->-------------------------*/
 const mongoose = require("mongoose");
 const DB_URL = process.env.MONGOURI || "mongodb://127.0.0.1:27017/yelpcamp";
