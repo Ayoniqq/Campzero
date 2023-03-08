@@ -1,6 +1,6 @@
 /* ---------------<--MONGO DB CONNECTION -->-------------------------*/
 const mongoose = require("mongoose");
-const DB_URL = process.env.MONGOURI || "mongodb://127.0.0.1:27017/campzero";
+const DB_URL = process.env.MONGOURI || "mongodb://127.0.0.1:27017/yelpcamp";
 mongoose.set("strictQuery", true); //Ensure this code comes before Mongoose connection below
 
 //mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp') //, { useNewUrlParser: true, useUnifiedTopology: true })
