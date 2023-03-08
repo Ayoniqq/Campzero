@@ -203,6 +203,9 @@ app.use((err, req, res, next) => {
   //res.status(status).send(message);
 });
 
+// connectDB().then(() => {
 app.listen(PORT, () => {
   console.log(`LISTENING ON PORT: ${PORT}`);
 });
+// });
+connectDB();
