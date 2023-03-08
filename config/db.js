@@ -9,6 +9,9 @@ const connectDB = () => {
     .connect(DB_URL)
     .then(() => {
       console.log("MONGO DB CONNECTION OPEN");
+      app.listen(PORT, () => {
+        console.log(`LISTENING ON PORT: ${PORT}`);
+      });
     })
     .catch((err) => {
       console.log("OH NO: MONGO DB ENCOUNTERED ERROR:");

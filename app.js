@@ -204,8 +204,9 @@ app.use((err, req, res, next) => {
 });
 
 // connectDB().then(() => {
-app.listen(PORT, () => {
-  console.log(`LISTENING ON PORT: ${PORT}`);
-});
+//   console.log("DB CONNECTED");
+//   app.listen(PORT, () => {
+//     console.log(`LISTENING ON PORT: ${PORT}`);
+//   });
 // });
 connectDB();
