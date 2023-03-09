@@ -8,14 +8,14 @@ const DB_URL = process.env.MONGOURI || "mongodb://127.0.0.1:27017/yelpcamp";
 mongoose.set("strictQuery", true); //Ensure this code comes before Mongoose connection below
 
 //mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp') //, { useNewUrlParser: true, useUnifiedTopology: true })
-const connectDB = () => {
-  mongoose
+const connectDB = async () => {
+  await mongoose
     .connect(DB_URL)
     .then(() => {
       console.log("MONGO DB CONNECTION OPEN");
-      app.listen(PORT, () => {
-        console.log(`LISTENING ON PORT: ${PORT}`);
-      });
+      // app.listen(PORT, () => {
+      //   console.log(`LISTENING ON PORT: ${PORT}`);
+      // });
     })
     .catch((err) => {
       console.log("OH NO: MONGO DB ENCOUNTERED ERROR:");
