@@ -4,6 +4,9 @@
 
 require("dotenv").config();
 
+console.log(process.env.SECRET);
+console.log(process.env.API_KEY);
+
 const express = require("express");
 const app = express();
 const session = require("express-session");
@@ -13,7 +16,6 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const flash = require("connect-flash");
 const expressError = require("./utils/expressError");
-const connectDB = require("./config/db");
 // const expressError = require('./utils/expressError');
 // const { campgroundJoiSchema, reviewJoiSchema } = require('./joiSchema');
 const Review = require("./models/review");
@@ -29,7 +31,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const MongoStore = require("connect-mongo");
 //const helmet = require('helmet');
 
-//const dbUrlLocal = "mongodb://127.0.0.1:27017/yelpcamp"; //"mongodb://mongo:fBABCwJ61pTi5YJetAYX@containers-us-west-87.railway.app:6142" //'mongodb://127.0.0.1:27017/campzero';
+const dbUrlLocal = "mongodb://127.0.0.1:27017/campzero";
 const dbUrl = process.env.DB_URL || dbUrlLocal;
 
 const multer = require("multer");
@@ -43,9 +45,24 @@ app.use(multer().array());
 
 // const Campground = require('./models/campground'); //Model
 
+/* ---------------<--MONGO DB CONNECTION -->-------------------------*/
+const mongoose = require("mongoose");
 const Joi = require("joi");
 const { findById } = require("./models/campground");
 const { Store } = require("express-session");
+mongoose.set("strictQuery", true); //Ensure this code comes before Mongoose connection below
+
+//mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp') //, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose
+  .connect(dbUrl)
+  .then(() => {
+    console.log("MONGO DB CONNECTION OPEN");
+  })
+  .catch((err) => {
+    console.log("OH NO: MONGO DB ENCOUNTERED ERROR:");
+    console.log(err);
+  });
+/* ---------------<--MONGO DB CONNECTION -->-------------------------*/
 
 app.engine("ejs", ejsMate); //FOR EJS-MATE
 app.set("view engine", "ejs");
@@ -160,12 +177,13 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //FLASH&USER GLOBAL MIDDLEWARE
 app.use((req, res, next) => {
-  //console.log('NEW SESSION:', req.session);
+  console.log("NEW SESSION:", req.session);
   console.log(req.query);
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
@@ -203,13 +221,6 @@ app.use((err, req, res, next) => {
   //res.status(status).send(message);
 });
 
-// connectDB().then(() => {
-//   console.log("DB CONNECTED");
-//   app.listen(PORT, () => {
-//     console.log(`LISTENING ON PORT: ${PORT}`);
-//   });
-// });
-connectDB();
 app.listen(PORT, () => {
   console.log(`LISTENING ON PORT: ${PORT}`);
-}); //
+});
