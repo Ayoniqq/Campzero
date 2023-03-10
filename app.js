@@ -39,12 +39,6 @@ const upload = multer();
 
 app.use(multer().array());
 
-//const dotenv = require('dotenv');
-
-//const isLoggedIn = require('middleware');
-
-// const Campground = require('./models/campground'); //Model
-
 /* ---------------<--MONGO DB CONNECTION -->-------------------------*/
 const mongoose = require("mongoose");
 const Joi = require("joi");
