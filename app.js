@@ -46,7 +46,6 @@ const { findById } = require("./models/campground");
 const { Store } = require("express-session");
 mongoose.set("strictQuery", true); //Ensure this code comes before Mongoose connection below
 
-//mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp') //, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose
   .connect(dbUrl)
   .then(() => {
